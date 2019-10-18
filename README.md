@@ -1,3 +1,3 @@
-# Laravel Reviews and Review Monitor
+# Laravel Reviews & Reviews Monitor
 
-## Documentation coming out soon
+#### Installation

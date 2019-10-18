@@ -4,6 +4,7 @@ namespace Reviewable\Http\Controllers;
 
 
 use Illuminate\Routing\Controller;
+use Reviewable\Http\Rules\MonitorRule;
 
 class ReviewableController extends Controller
 {
@@ -30,52 +31,52 @@ class ReviewableController extends Controller
     }
 
 
-    public function storeReview(Request $request)
+    public function storeReview()
     {
-        $request->request->add(['slug' => str_slug($request->name)]);
-        $this->roleValidation($request);
+        request()->request->add(['slug' => str_slug(request()->name)]);
+        $this->roleValidation(request());
         $role = app(config('ruhusa.models.role'));
 
-        $role = $role->create($request->all());
+        $role = $role->create(request()->all());
 
-        $role->permissions()->syncWithoutDetaching($request->permissions);
+        $role->permissions()->syncWithoutDetaching(request()->permissions);
 
-        if ($request->has('users')){
-            $role->users()->syncWithoutDetaching($request->users);
+        if (request()->has('users')){
+            $role->users()->syncWithoutDetaching(request()->users);
         }
 
         return redirect()->route('roles.index');
     }
 
 
-    public function storeMonitor(Request $request)
+    public function storeMonitor()
     {
-        $request->request->add(['slug' => str_slug($request->name)]);
-        $this->permissionValidation($request);
+        request()->request->add(['slug' => str_slug(request()->name)]);
+        $this->permissionValidation(request());
         $permission = app(config('ruhusa.models.permission'));
-        $permission = $permission->create($request->all());
+        $permission = $permission->create(request()->all());
 
-        if ($request->has('roles')){
-            $permission->roles()->syncWithoutDetaching($request->roles);
+        if (request()->has('roles')){
+            $permission->roles()->syncWithoutDetaching(request()->roles);
         }
 
         return redirect()->route('permissions.index');
     }
 
-    public function updateMonitor(Request $request, $permission)
+    public function updateMonitor($permission)
     {
-        $request->request->add(['slug' => str_slug($request->name)]);
+        request()->request->add(['slug' => str_slug(request()->name)]);
         $permission = app(config('ruhusa.models.permission'))->find($permission);
 
-        if ($permission->slug != $request->slug){
-            $this->permissionValidation($request);
+        if ($permission->slug != request()->slug){
+            $this->permissionValidation(request());
         }
 
-        $permission->update($request->all());
+        $permission->update(request()->all());
 
         $permission->roles()->detach();
-        if ($request->has('roles')){
-            $permission->roles()->sync($request->roles);
+        if (request()->has('roles')){
+            $permission->roles()->sync(request()->roles);
         }
 
         return redirect()->route('permissions.index');
@@ -92,9 +93,9 @@ class ReviewableController extends Controller
             ->withUsers(app(config('ruhusa.models.defaultUser'))->all());
     }
 
-    public function roleValidation(Request $request)
+    public function roleValidation()
     {
-        $request->validate([
+        request()->validate([
             'name' => ['required', 'string', new SlugRule(app(config('ruhusa.models.role')))],
             'permissions' => ['required']
         ]);
@@ -103,8 +104,8 @@ class ReviewableController extends Controller
     public function reviews()
     {
         $roles = app(config('ruhusa.models.role'));
-        if ($request->has('permission')){
-            $permission = app(config('ruhusa.models.permission'))->find($request->permission);
+        if (request()->has('permission')){
+            $permission = app(config('ruhusa.models.permission'))->find(request()->permission);
             if ($permission) {
                 $roles = $permission->roles();
             }
@@ -114,11 +115,11 @@ class ReviewableController extends Controller
             ->withRoles($roles->paginate(config('ruhusa.perPage')));
     }
 
-    public function permissions(Request $request)
+    public function permissions()
     {
         $permissions = app(config('ruhusa.models.permission'));
-        if ($request->has('role')){
-            $role = app(config('ruhusa.models.role'))->find($request->role);
+        if (request()->has('role')){
+            $role = app(config('ruhusa.models.role'))->find(request()->role);
             $permissions = [];
             if ($role) {
                 $permissions = $role->permissions();
@@ -129,36 +130,36 @@ class ReviewableController extends Controller
             ->withPermissions($permissions->paginate(config('ruhusa.perPage')));
     }
 
-    public function updateRole(Request $request, $role)
+    public function updateRole($role)
     {
-        $request->request->add(['slug' => str_slug($request->name)]);
+        request()->request->add(['slug' => str_slug(request()->name)]);
         $role = app(config('ruhusa.models.role'))->find($role);
 
-        $request->validate([
+        request()->validate([
             'permissions' => ['required']
         ]);
 
-        if ($role->slug != $request->slug){
-            $this->roleValidation($request);
+        if ($role->slug != request()->slug){
+            $this->roleValidation(request());
         }
 
-        $role->update($request->all());
+        $role->update(request()->all());
 
         $role->permissions()->detach();
-        $role->permissions()->sync($request->permissions);
+        $role->permissions()->sync(request()->permissions);
 
-        if ($request->has('users')){
-            $role->users()->sync($request->users);
+        if (request()->has('users')){
+            $role->users()->sync(request()->users);
         }
 
         return redirect()->route('roles.index');
     }
 
 
-    protected function permissionValidation(Request $request)
+    protected function permissionValidation()
     {
-        $request->validate([
-            'name' => ['required', 'string', new SlugRule(app(config('ruhusa.models.permission')))],
+        request()->validate([
+            'name' => ['required', 'string', new MonitorRule(app(config('ruhusa.models.permission')))],
         ]);
     }
 

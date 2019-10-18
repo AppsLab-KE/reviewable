@@ -9,6 +9,9 @@
         "reviewable",
         "laravel reviews"
     ],
+    "support": {
+        "issues": "https://github.com/AppsLab-KE/reviewable/issues"
+    },
     "homepage": "https://github.com/AppsLab-KE/reviewable",
     "authors": [
         {
@@ -20,7 +23,7 @@
     ],
     "minimum-stability": "beta",
     "require": {
-        "php": "^7.1",
+        "php": "^7.3",
         "doctrine/dbal": "^2.8",
         "hirak/prestissimo": "^0.3.9"
     },
