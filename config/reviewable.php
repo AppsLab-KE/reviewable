@@ -31,6 +31,7 @@ return [
         'item' => "hotels",
         'user' => "users"
     ],
+    'monitor' => true,
     'perPage' => 15,
     'route-prefix' => 'reviews',
     'login-route' => 'login',

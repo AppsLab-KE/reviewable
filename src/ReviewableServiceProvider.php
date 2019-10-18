@@ -4,6 +4,7 @@
 namespace AppsLab\Acl;
 
 use Illuminate\Support\ServiceProvider;
+use Reviewable\EventServiceProvider;
 
 class ReviewableServiceProvider extends ServiceProvider
 {
@@ -34,7 +35,7 @@ class ReviewableServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->loadCommands();
+        $this->registerServiceProvider();
     }
 
     private function registerResources()
@@ -58,21 +59,6 @@ class ReviewableServiceProvider extends ServiceProvider
         ];
     }
 
-    private function registerBladeExtensions()
-    {
-        Blade::directive('role', function ($role){
-            return "<?php if(auth()->check() && auth()->user()->hasRole({$role})) : ?>";
-        });
-
-        Blade::directive('elserole', function ($role){
-            return "<?php else if(auth()->check() && auth()->user()->hasRole({$role})) : ?>";
-        });
-
-        Blade::directive('endrole', function (){
-            return "<?php endif; ?>";
-        });
-    }
-
     private function registerPublishing()
     {
         //this is to allow you to modify the tables according to your project need
@@ -92,25 +78,8 @@ class ReviewableServiceProvider extends ServiceProvider
         ], 'ruhusa');
     }
 
-    protected function authorize()
+    protected function registerServiceProvider()
     {
-        if (config('ruhusa.models.permission') && Schema::hasTable(config('ruhusa.tables.permission'))){
-            app(config('ruhusa.models.permission'))::get()->map(function ($permission){
-                Gate::define($permission->slug, function ($user) use($permission){
-                    return $user->hasPermissionTo($permission);
-                });
-            });
-        }
-    }
-
-    protected function loadCommands()
-    {
-        if ($this->app->runningInConsole()){
-            $this->commands([
-                InstallPackage::class,
-                CreatePermission::class,
-                CreateRole::class
-            ]);
-        }
+        $this->app->register(EventServiceProvider::class);
     }
 }

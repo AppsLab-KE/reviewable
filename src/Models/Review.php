@@ -5,6 +5,7 @@ namespace Reviewable\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Reveiwable\Events\MonitorReview;
 use Reviewable\Traits\ReviewHasRelation;
 
 class Review extends Model
@@ -14,6 +15,12 @@ class Review extends Model
     protected $dates = [
         'deleted_at'
     ];
+
+    protected $dispatchesEvents = [
+        'created' => MonitorReview::class,
+        'saved' => MonitorReview::class
+    ];
+
     protected $table;
 
     public function __construct(array $attributes = [])
