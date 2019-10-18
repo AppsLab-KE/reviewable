@@ -16,7 +16,7 @@ class CreateReviewsTable extends Migration
             $table->enum('type',['abuse','negative','mention'])->nullable();
             $table->string('title')->nullable();
             $table->text('review')->nullable();
-            $table->double('stars')->default(1);
+            $table->double('rating')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });

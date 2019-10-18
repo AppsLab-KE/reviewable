@@ -61,6 +61,7 @@ class ComposerStaticInit7fce576e224e30346890cdbb2754cce2
         'R' => 
         array (
             'Reviewable\\Tests\\' => 17,
+            'Reviewable\\' => 11,
             'Ramsey\\Uuid\\' => 12,
         ),
         'P' => 
@@ -114,10 +115,6 @@ class ComposerStaticInit7fce576e224e30346890cdbb2754cce2
         array (
             'Cron\\' => 5,
             'Carbon\\' => 7,
-        ),
-        'A' => 
-        array (
-            'AppsLab\\Acl\\' => 12,
         ),
     );
 
@@ -224,6 +221,10 @@ class ComposerStaticInit7fce576e224e30346890cdbb2754cce2
         array (
             0 => __DIR__ . '/../..' . '/tests',
         ),
+        'Reviewable\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
@@ -315,10 +316,6 @@ class ComposerStaticInit7fce576e224e30346890cdbb2754cce2
         'Carbon\\' => 
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
-        ),
-        'AppsLab\\Acl\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 

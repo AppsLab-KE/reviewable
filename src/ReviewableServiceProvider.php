@@ -24,13 +24,15 @@ class ReviewableServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'reviewable');
         $this->publishes([
-            __DIR__.'/../resources/views/layouts/app.blade.php' => resource_path('views/vendor/ruhusa/layouts/app.blade.php'),
-            __DIR__.'/../resources/views/acl/permission.blade.php' => resource_path('views/vendor/ruhusa/acl/permission.blade.php'),
-            __DIR__.'/../resources/views/acl/role.blade.php' => resource_path('views/vendor/ruhusa/acl/role.blade.php'),
-            __DIR__.'/../resources/views/acl/role-form-body.blade.php' => resource_path('views/vendor/ruhusa/acl/role-form-body.blade.php'),
-            __DIR__.'/../resources/views/acl/permission-form-body.blade.php' => resource_path('views/vendor/ruhusa/acl/permission-form-body.blade.php'),
-            __DIR__.'/../resources/views/acl/partials/_role-form.blade.php' => resource_path('views/vendor/ruhusa/acl/partials/_role-form.blade.php'),
-            __DIR__.'/../resources/views/acl/partials/_permission-form.blade.php' => resource_path('views/vendor/ruhusa/acl/partials/_permission-form.blade.php'),
+            __DIR__.'/../resources/public/css/app.css' => public_path('vendor/reviewable/css/app.css'),
+            __DIR__.'/../resources/public/js/app.js' => public_path('vendor/reviewable/js/app.js'),
+            __DIR__.'/../resources/views/layouts/app.blade.php' => resource_path('views/vendor/reviewable/layouts/app.blade.php'),
+            __DIR__.'/../resources/views/reviewable/permission.blade.php' => resource_path('views/vendor/reviewable/reviewable/permission.blade.php'),
+            __DIR__.'/../resources/views/reviewable/role.blade.php' => resource_path('views/vendor/reviewable/reviews/review.blade.php'),
+            __DIR__.'/../resources/views/reviewable/role-form-body.blade.php' => resource_path('views/vendor/reviewable/reviewable/role-form-body.blade.php'),
+            __DIR__.'/../resources/views/reviewable/permission-form-body.blade.php' => resource_path('views/vendor/reviewable/reviewable/permission-form-body.blade.php'),
+            __DIR__.'/../resources/views/reviewable/partials/_role-form.blade.php' => resource_path('views/vendor/reviewable/reviewable/partials/_role-form.blade.php'),
+            __DIR__.'/../resources/views/reviewable/partials/_permission-form.blade.php' => resource_path('views/vendor/reviewable/reviewable/partials/_permission-form.blade.php'),
         ],'reviewable-views');
     }
 
@@ -48,7 +50,6 @@ class ReviewableServiceProvider extends ServiceProvider
     private function registerResources()
     {
         $this->registerRoutes();
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 
     /**
@@ -81,18 +82,11 @@ class ReviewableServiceProvider extends ServiceProvider
     {
         //this is to allow you to modify the tables according to your project need
         $this->publishes([
-            __DIR__.'/../database/migrations/2018_10_12_000000_create_permissions_table.php' =>
-                'database/migrations/2018_10_12_000000_create_permissions_table.php',
-            __DIR__.'/../database/migrations/2018_10_12_000000_create_roles_table.php' =>
-                'database/migrations/2018_10_12_000000_create_roles_table.php',
-            __DIR__.'/../database/migrations/2018_11_24_105604_create_users_permissions_table.php' =>
-                'database/migrations/2018_11_24_105604_create_users_permissions_table.php',
-            __DIR__.'/../database/migrations/2018_11_24_105604_create_users_roles_table.php' =>
-                'database/migrations/2018_11_24_105604_create_users_roles_table.php',
-            __DIR__.'/../database/migrations/2018_11_24_110643_create_roles_permissions_table.php' =>
-                'database/migrations/2018_11_24_110643_create_roles_permissions_table.php',
-            __DIR__ . '/../config/ruhusa.php' => 'config/ruhusa.php'
-
+            __DIR__ . '/../config/reviewable.php' => 'config/reviewable.php',
+            __DIR__.'/../database/migrations/2018_10_12_000000_create_monitors_table.php' =>
+                'database/migrations/2018_10_12_000000_create_monitors_table.php',
+            __DIR__.'/../database/migrations/2018_10_12_000000_create_reviews_table.php' =>
+                'database/migrations/2018_10_12_000000_create_reviews_table.php',
         ], 'reviewable');
     }
 

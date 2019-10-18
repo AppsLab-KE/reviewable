@@ -5,6 +5,7 @@ namespace Reviewable\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Reviewable\Http\Rules\MonitorRule;
+use Reviewable\Models\Review;
 
 class ReviewableController extends Controller
 {
@@ -103,16 +104,45 @@ class ReviewableController extends Controller
 
     public function reviews()
     {
-        $roles = app(config('ruhusa.models.role'));
-        if (request()->has('permission')){
-            $permission = app(config('ruhusa.models.permission'))->find(request()->permission);
-            if ($permission) {
-                $roles = $permission->roles();
-            }
-        }
+        $reviews = app(config('reviewable.models.review'));
 
-        return view('ruhusa::acl.role')
-            ->withRoles($roles->paginate(config('ruhusa.perPage')));
+        $review = new Review();
+        $user = app('App\User')->find(1);
+        $hotel = app('App\Models\Hotel')->create([
+            'name' => 'demo guy',
+            'slogan' => 'this is it',
+            'email' => 'marv@d'.time().'d.com',
+            'phone_no' => '0704407117',
+            'street' => 'langata',
+            'photo' => '/dejje',
+            'slug' => 'dmeo-dmeo',
+            'user_id' => $user->id,
+            'activated' => true
+        ]);
+        dd($hotel);
+
+        dd($review->fill(array_merge([
+            'title' => 'demo',
+            'review' => 'demo review',
+            'approved' => 1,
+            'hotel_id' => 1,
+            'rating' => 7,
+        ],[
+            'reviewer_id' => $user->id,
+            'reviewer_type' => get_class($user)
+        ])));
+        dd($user->reviews()->save(app(config('reviewable.models.review'))->create()));
+
+        dd(app(config('reviewable.models.review'))->create([
+            'title' => 'demo',
+            'review' => 'demo review',
+            'approved' => 1,
+            'hotel_id' => 1,
+            'rating' => 7,
+        ]));
+
+        return view('reviewable::reviews.review')
+            ->withReviews($reviews->paginate(config('reviewable.perPage')));
     }
 
     public function permissions()
