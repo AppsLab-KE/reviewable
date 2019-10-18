@@ -16,11 +16,6 @@ class Review extends Model
         'deleted_at'
     ];
 
-    protected $dispatchesEvents = [
-        'created' => new MonitorReview($this),
-        'saved' => new MonitorReview($this)
-    ];
-
     protected $table;
 
     public function __construct(array $attributes = [])
