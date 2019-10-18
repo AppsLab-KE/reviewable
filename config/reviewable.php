@@ -12,8 +12,10 @@ return [
    */
 
     'models' => [
-        'review'          => '\Reviewable\Models\Review',
-        'items'   => config('auth.providers.users.model'),
+        'review' => '\Reviewable\Models\Review',
+        'user'   => config('auth.providers.users.model'),
+        'item'   => config('auth.providers.users.model'),
+        'monitor'   => '\Reviewable\Models\Monitor',
     ],
 
     /*
@@ -26,9 +28,11 @@ return [
   */
     'tables' => [
         'review' => "reviews",
+        'item' => "hotels",
+        'user' => "users"
     ],
     'perPage' => 15,
-    'route-prefix' => 'acl',
+    'route-prefix' => 'reviews',
     'login-route' => 'login',
     'route-middleware' => 'web',
     'messages' => [

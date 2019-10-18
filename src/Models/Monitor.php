@@ -5,11 +5,10 @@ namespace Reviewable\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Reviewable\Traits\ReviewHasRelation;
 
-class Review extends Model
+class Monitor extends Model
 {
-    use ReviewHasRelation, SoftDeletes;
+    use SoftDeletes;
 
     protected $dates = [
         'deleted_at'
@@ -19,10 +18,10 @@ class Review extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->setTable(config('reviewable.tables.review'));
+        $this->setTable(config('reviewable.tables.monitor'));
     }
 
     protected $fillable = [
-        'user_id','item_id','title','review','stars','flagged','type'
+        'type','name','description',
     ];
 }

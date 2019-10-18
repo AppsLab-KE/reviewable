@@ -12,6 +12,8 @@ class CreateReviewsTable extends Migration
             $table->bigIncrements('id')->index();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('item_id');
+            $table->boolean('flagged')->default(false);
+            $table->enum('type',['abuse','negative','mention'])->nullable();
             $table->string('title')->nullable();
             $table->text('review')->nullable();
             $table->double('stars')->default(1);
