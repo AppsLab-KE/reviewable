@@ -10,6 +10,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listener = [
         'Reviewable\Events\MonitorReview' => [
             'Reviewable\Listeners\ReviewCreated'
+        ],
+        'item.saved' => [
+            'Reviewable\Events\MonitorReview@itemSaved'
         ]
     ];
 

@@ -9,10 +9,6 @@ use Reviewable\Events\MonitorReview;
 
 trait ReviewHasRelation
 {
-    protected $dispatchesEvents = [
-        'created' => MonitorReview::class,
-        'saved' => MonitorReview::class
-    ];
 
     public function reviewable() : MorphTo
     {
@@ -24,14 +20,14 @@ trait ReviewHasRelation
         return $this->morphTo('reviewer');
     }
 
-    public function boot()
+    public static function boot()
     {
         parent::boot();
         static::saved(function ($item){
-            Event::fire('item.saved', $item);
+            event(new MonitorReview($item));
         });
         static::created(function ($item){
-            Event::fire('item.saved', $item);
+            event(new MonitorReview($item));
         });
     }
 }
