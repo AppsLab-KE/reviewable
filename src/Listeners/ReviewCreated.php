@@ -5,7 +5,7 @@ namespace Reviewable\Listeners;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
-use Reveiwable\Events\MonitorReview;
+use Reviewable\Events\MonitorReview;
 
 class ReviewCreated
 {

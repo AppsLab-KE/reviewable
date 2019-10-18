@@ -5,7 +5,7 @@ namespace Reviewable\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Reveiwable\Events\MonitorReview;
+use Reviewable\Events\MonitorReview;
 use Reviewable\Traits\ReviewHasRelation;
 
 class Review extends Model
@@ -17,8 +17,8 @@ class Review extends Model
     ];
 
     protected $dispatchesEvents = [
-        'created' => MonitorReview::class,
-        'saved' => MonitorReview::class
+        'created' => new MonitorReview($this),
+        'saved' => new MonitorReview($this)
     ];
 
     protected $table;

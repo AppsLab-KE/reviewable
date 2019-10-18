@@ -104,10 +104,12 @@ class ReviewableController extends Controller
 
     public function reviews()
     {
-        $reviews = app(config('reviewable.models.review'));
+        $review = config('reviewable.models.review');
 
-        $review = new Review();
+        $review = new $review();
+//        dd(get_class($review));
         $user = app('App\User')->find(1);
+
         $hotel = app('App\Models\Hotel')->create([
             'name' => 'demo guy',
             'slogan' => 'this is it',
@@ -119,9 +121,8 @@ class ReviewableController extends Controller
             'user_id' => $user->id,
             'activated' => true
         ]);
-        dd($hotel);
 
-        dd($review->fill(array_merge([
+        $result = $review->fill(array_merge([
             'title' => 'demo',
             'review' => 'demo review',
             'approved' => 1,
@@ -130,7 +131,13 @@ class ReviewableController extends Controller
         ],[
             'reviewer_id' => $user->id,
             'reviewer_type' => get_class($user)
-        ])));
+        ]));
+
+        $hotel->reviews()->save($result);
+
+        dd('de');
+
+
         dd($user->reviews()->save(app(config('reviewable.models.review'))->create()));
 
         dd(app(config('reviewable.models.review'))->create([
