@@ -1,9 +1,9 @@
 <?php
 
 
-namespace AppsLab\Acl\Tests;
+namespace Reviewable\Tests;
 
-use AppsLab\Acl\ReviewableServiceProvider;
+use Reviewable\ReviewableServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
