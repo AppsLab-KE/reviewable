@@ -4,15 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePermissionsTable extends Migration
+class CreateReviewsTable extends Migration
 {
     public function up()
     {
-        Schema::create('permissions', function (Blueprint $table){
-            $table->increments('id')->index();
-            $table->string('slug')->unique();
-            $table->string('name');
-            $table->string('description')->nullable();
+        Schema::create('reviews', function (Blueprint $table){
+            $table->bigIncrements('id')->index();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('item_id');
+            $table->string('title')->nullable();
+            $table->text('review')->nullable();
+            $table->double('stars')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -20,6 +22,6 @@ class CreatePermissionsTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('reviews');
     }
 }

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4cf82263-8b6a-4795-b9ef-2f54339a1299" name="Default Changelist" comment="" />
+    <list default="true" id="4cf82263-8b6a-4795-b9ef-2f54339a1299" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2018_10_12_000000_create_permissions_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2018_10_12_000000_create_permissions_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Review.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Review.php" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,25 +20,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Middleware/PermissionMiddleware.php">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Models/Review.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="882">
-              <caret line="23" column="61" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="61" />
+            <state relative-caret-position="467">
+              <caret line="23" column="46" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
+              <caret line="23" column="37" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
+              <caret line="23" column="29" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+              <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
               <folding>
-                <element signature="e#42#91#0#PHP" expanded="true" />
+                <element signature="e#39#78#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Models/Review.php">
+        <entry file="file://$PROJECT_DIR$/database/migrations/2018_10_12_000000_create_permissions_table.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="19" column="52" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="52" />
+            <state relative-caret-position="635">
+              <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
               <folding>
-                <element signature="e#39#78#0#PHP" expanded="true" />
+                <element signature="e#7#52#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -67,7 +74,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/reviewable.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="294">
@@ -89,8 +96,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="84">
-                <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
+              <first_editor>
+                <caret column="2" selection-start-column="2" selection-end-column="2" />
               </first_editor>
               <second_editor />
             </state>
@@ -170,7 +177,6 @@
         <option value="$PROJECT_DIR$/src/Command/CreatePermission.php" />
         <option value="$PROJECT_DIR$/src/Command/CreateRole.php" />
         <option value="$PROJECT_DIR$/src/Command/InstallPackage.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2018_10_12_000000_create_permissions_table.php" />
         <option value="$PROJECT_DIR$/database/migrations/2018_10_12_000000_create_roles_table.php" />
         <option value="$PROJECT_DIR$/src/Commands/CreateRole.php" />
         <option value="$PROJECT_DIR$/src/Commands/InstallPackage.php" />
@@ -182,10 +188,11 @@
         <option value="$PROJECT_DIR$/src/Commands/CreatePermission.php" />
         <option value="$PROJECT_DIR$/src/Traits/HasReview.php" />
         <option value="$PROJECT_DIR$/composer.json" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/ReviewableServiceProvider.php" />
-        <option value="$PROJECT_DIR$/src/Models/Review.php" />
         <option value="$PROJECT_DIR$/config/reviewable.php" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/database/migrations/2018_10_12_000000_create_permissions_table.php" />
+        <option value="$PROJECT_DIR$/src/Models/Review.php" />
       </list>
     </option>
   </component>
@@ -306,6 +313,12 @@
             <path>
               <item name="reviewable" type="b2602c69:ProjectViewProjectNode" />
               <item name="reviewable" type="462c0819:PsiDirectoryNode" />
+              <item name="database" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="reviewable" type="b2602c69:ProjectViewProjectNode" />
+              <item name="reviewable" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -384,12 +397,12 @@
       <workItem from="1570951887635" duration="316000" />
       <workItem from="1571071460145" duration="4317000" />
       <workItem from="1571392472086" duration="462000" />
-      <workItem from="1571403220783" duration="1026000" />
+      <workItem from="1571403220783" duration="1349000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49585000" />
+    <option name="totallyTimeSpent" value="49908000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1920" height="1053" extended-state="6" />
@@ -522,13 +535,6 @@
     <entry file="file://$PROJECT_DIR$/resources/views/acl/partials/_role-form.blade.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2018_10_12_000000_create_permissions_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="15" column="34" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="42">
@@ -601,20 +607,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="84">
-            <caret line="2" column="32" selection-start-line="2" selection-start-column="32" selection-end-line="2" selection-end-column="32" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/composer.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1134">
           <caret line="27" column="26" lean-forward="true" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/reviewable.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor>
+            <caret column="2" selection-start-column="2" selection-end-column="2" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
@@ -625,20 +638,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Models/Review.php">
+    <entry file="file://$PROJECT_DIR$/database/migrations/2018_10_12_000000_create_permissions_table.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="19" column="52" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="52" />
+        <state relative-caret-position="635">
+          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
           <folding>
-            <element signature="e#39#78#0#PHP" expanded="true" />
+            <element signature="e#7#52#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/reviewable.php">
+    <entry file="file://$PROJECT_DIR$/src/Models/Review.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="467">
+          <caret line="23" column="46" selection-start-line="23" selection-start-column="46" selection-end-line="23" selection-end-column="46" />
+          <caret line="23" column="37" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
+          <caret line="23" column="29" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+          <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+          <folding>
+            <element signature="e#39#78#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

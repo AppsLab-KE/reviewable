@@ -17,10 +17,10 @@ class Review extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->setTable(config('review.tables.review'));
+        $this->setTable(config('reviewable.tables.review'));
     }
 
     protected $fillable = [
-        'name', 'slug','description'
+        'user_id','item_id','title','review','stars'
     ];
 }
