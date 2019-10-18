@@ -4,10 +4,17 @@
 namespace Reviewable\Traits;
 
 
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+
 trait Reviewable
 {
-    public function reviews()
+    /**
+     * Item reviews
+     *
+     * @return mixed
+     */
+    public function reviews(): MorphMany
     {
-        return $this->hasMany(config('reviewable.models.review'),'item_id', 'id');
+        return $this->morphMany(config('reviewable.models.review'), 'reviewable');
     }
 }

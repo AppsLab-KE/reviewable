@@ -1,10 +1,10 @@
 <?php
 
 
-namespace AppsLab\Acl;
+namespace Reviewable;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Reviewable\EventServiceProvider;
 
 class ReviewableServiceProvider extends ServiceProvider
 {
@@ -14,14 +14,15 @@ class ReviewableServiceProvider extends ServiceProvider
             $this->registerPublishing();
         }
         $this->registerResources();
-        $this->registerBladeExtensions();
-        $this->authorize();
         $this->loadViews();
     }
 
+    /**
+     * Load and publish views
+     */
     public function loadViews()
     {
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'ruhusa');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'reviewable');
         $this->publishes([
             __DIR__.'/../resources/views/layouts/app.blade.php' => resource_path('views/vendor/ruhusa/layouts/app.blade.php'),
             __DIR__.'/../resources/views/acl/permission.blade.php' => resource_path('views/vendor/ruhusa/acl/permission.blade.php'),
@@ -30,20 +31,29 @@ class ReviewableServiceProvider extends ServiceProvider
             __DIR__.'/../resources/views/acl/permission-form-body.blade.php' => resource_path('views/vendor/ruhusa/acl/permission-form-body.blade.php'),
             __DIR__.'/../resources/views/acl/partials/_role-form.blade.php' => resource_path('views/vendor/ruhusa/acl/partials/_role-form.blade.php'),
             __DIR__.'/../resources/views/acl/partials/_permission-form.blade.php' => resource_path('views/vendor/ruhusa/acl/partials/_permission-form.blade.php'),
-        ],'ruhusa-views');
+        ],'reviewable-views');
     }
 
+    /**
+     * Register
+     */
     public function register()
     {
         $this->registerServiceProvider();
     }
 
+    /**
+     * Register resources
+     */
     private function registerResources()
     {
         $this->registerRoutes();
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
     }
 
+    /**
+     * Package route
+     */
     public function registerRoutes()
     {
         Route::group($this->routeConfig(), function (){
@@ -51,14 +61,22 @@ class ReviewableServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * Package route config
+     *
+     * @return array
+     */
     protected function routeConfig()
     {
         return [
-            'prefix' => config('ruhusa.route-prefix'),
-            'middleware' => config('ruhusa.route-middleware')
+            'prefix' => config('reviewable.route-prefix'),
+            'middleware' => config('reviewable.route-middleware')
         ];
     }
 
+    /**
+     * Publish resources
+     */
     private function registerPublishing()
     {
         //this is to allow you to modify the tables according to your project need
@@ -75,9 +93,12 @@ class ReviewableServiceProvider extends ServiceProvider
                 'database/migrations/2018_11_24_110643_create_roles_permissions_table.php',
             __DIR__ . '/../config/ruhusa.php' => 'config/ruhusa.php'
 
-        ], 'ruhusa');
+        ], 'reviewable');
     }
 
+    /**
+     * Register event service provider
+     */
     protected function registerServiceProvider()
     {
         $this->app->register(EventServiceProvider::class);

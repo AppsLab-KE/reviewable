@@ -1,11 +1,11 @@
 <?php
 
-namespace AppsLab\Acl\Http\Rules;
+namespace Reviewable\Http\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Database\Eloquent\Model;
 
-class SlugRule implements Rule
+class MonitorRule implements Rule
 {
     protected $model;
     /**
@@ -28,11 +28,11 @@ class SlugRule implements Rule
     public function passes($attribute, $value)
     {
         if (request()->method() == 'POST'){
-            return ! (bool) $this->model->where('slug', '=', str_slug($value))->first();
+            return ! (bool) $this->model->where('name', '=', str_slug($value))->first();
         }
 
         if (request()->method() == 'PUT'){
-            return ! (bool) $this->model->where('slug', '=', str_slug($value))->first();
+            return ! (bool) $this->model->where('name', '=', str_slug($value))->first();
         }
 
         return false;
@@ -45,6 +45,6 @@ class SlugRule implements Rule
      */
     public function message()
     {
-        return 'Already exist.';
+        return 'Monitor already exist.';
     }
 }

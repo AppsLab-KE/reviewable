@@ -10,8 +10,8 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table){
             $table->bigIncrements('id')->index();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('item_id');
+            $table->morphs('reviewer');
+            $table->morphs('reviewable');//class name
             $table->boolean('flagged')->default(false);
             $table->enum('type',['abuse','negative','mention'])->nullable();
             $table->string('title')->nullable();

@@ -1,42 +1,27 @@
 <?php
 
-namespace AppsLab\Acl\Http\Controllers;
+namespace Reviewable\Http\Controllers;
 
 
-use AppsLab\Acl\Http\Rules\SlugRule;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
-class RuhusaController extends Controller
+class ReviewableController extends Controller
 {
-    /**
-     * Create role
-     * @return mixed
-     */
-    public function createRole()
+    public function createReview()
     {
-        return view('ruhusa::acl.role-form-body')
+        return view('reviewable::reviewable.role-form-body')
             ->withPermissions(app(config('ruhusa.models.permission'))->all())
             ->withUsers(app(config('ruhusa.models.defaultUser'))->all());
     }
 
-    /**
-     * Create permission 
-     * @return mixed
-     */
-    public function createPermission()
+
+    public function createMonitor()
     {
-        return view('ruhusa::acl.permission-form-body')
-            ->withRoles(app(config('ruhusa.models.role'))->all())
-            ->withPermissions(app(config('ruhusa.models.permission'))->all());
+        return view('reviewable::acl.permission-form-body');
     }
 
-    /**
-     * Edit permission
-     * @param $permission
-     * @return mixed
-     */
-    public function editPermission($permission)
+
+    public function editMonitor($permission)
     {
         return view('ruhusa::acl.permission-form-body')
             ->withRoles(app(config('ruhusa.models.role'))->all())
@@ -44,12 +29,8 @@ class RuhusaController extends Controller
             ->withPermission(app(config('ruhusa.models.permission'))->find($permission));
     }
 
-    /**
-     * Store role
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function storeRole(Request $request)
+
+    public function storeReview(Request $request)
     {
         $request->request->add(['slug' => str_slug($request->name)]);
         $this->roleValidation($request);
@@ -66,12 +47,8 @@ class RuhusaController extends Controller
         return redirect()->route('roles.index');
     }
 
-    /**
-     * Store permission create
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function storePermission(Request $request)
+
+    public function storeMonitor(Request $request)
     {
         $request->request->add(['slug' => str_slug($request->name)]);
         $this->permissionValidation($request);
@@ -85,13 +62,7 @@ class RuhusaController extends Controller
         return redirect()->route('permissions.index');
     }
 
-    /**
-     * Update permission
-     * @param Request $request
-     * @param $permission
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function updatePermission(Request $request, $permission)
+    public function updateMonitor(Request $request, $permission)
     {
         $request->request->add(['slug' => str_slug($request->name)]);
         $permission = app(config('ruhusa.models.permission'))->find($permission);
@@ -110,12 +81,7 @@ class RuhusaController extends Controller
         return redirect()->route('permissions.index');
     }
 
-    /**
-     * Return edit view
-     * @param $role
-     * @return mixed
-     */
-    public function editRole($role)
+    public function editReview($role)
     {
         $roleModel = app(config('ruhusa.models.role'));
         $role =  $roleModel->findOrFail($role);
@@ -126,10 +92,6 @@ class RuhusaController extends Controller
             ->withUsers(app(config('ruhusa.models.defaultUser'))->all());
     }
 
-    /**
-     * Role validation
-     * @param Request $request
-     */
     public function roleValidation(Request $request)
     {
         $request->validate([
@@ -138,12 +100,7 @@ class RuhusaController extends Controller
         ]);
     }
 
-    /**
-     * List roles
-     * @param Request $request
-     * @return mixed
-     */
-    public function roles(Request $request)
+    public function reviews()
     {
         $roles = app(config('ruhusa.models.role'));
         if ($request->has('permission')){
@@ -157,11 +114,6 @@ class RuhusaController extends Controller
             ->withRoles($roles->paginate(config('ruhusa.perPage')));
     }
 
-    /**
-     * List permissions
-     * @param Request $request
-     * @return mixed
-     */
     public function permissions(Request $request)
     {
         $permissions = app(config('ruhusa.models.permission'));
@@ -177,12 +129,6 @@ class RuhusaController extends Controller
             ->withPermissions($permissions->paginate(config('ruhusa.perPage')));
     }
 
-    /**
-     * Update role
-     * @param Request $request
-     * @param $role
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function updateRole(Request $request, $role)
     {
         $request->request->add(['slug' => str_slug($request->name)]);
@@ -208,10 +154,7 @@ class RuhusaController extends Controller
         return redirect()->route('roles.index');
     }
 
-    /**
-     * Permission validation
-     * @param Request $request
-     */
+
     protected function permissionValidation(Request $request)
     {
         $request->validate([
@@ -219,11 +162,7 @@ class RuhusaController extends Controller
         ]);
     }
 
-    /**
-     * Delete role
-     * @param $role
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function deleteRole($role)
     {
         $role = app(config('ruhusa.models.role'))->find($role);
@@ -234,11 +173,7 @@ class RuhusaController extends Controller
         return back();
     }
 
-    /**
-     * Delete permissions
-     * @param $permission
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function deletePermission($permission)
     {
         $permission = app(config('ruhusa.models.permission'))->find($permission);

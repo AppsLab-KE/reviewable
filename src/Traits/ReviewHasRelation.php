@@ -3,17 +3,17 @@
 
 namespace Reviewable\Traits;
 
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+
 trait ReviewHasRelation
 {
-    public function item()
+    public function reviewable() : MorphTo
     {
-        return $this->belongsTo(config('reviewable.models.item'), 'item_id', 'id');
+        return $this->morphTo('reviewable');
     }
 
-    public function user()
+    public function reviewer() : MorphTo
     {
-        return $this->belongsTo(config('reviewable.models.user'), 'user_id', 'id');
+        return $this->morphTo('reviewer');
     }
-
-
 }

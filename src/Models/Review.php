@@ -29,7 +29,7 @@ class Review extends Model
         $this->setTable(config('reviewable.tables.review'));
     }
 
-    protected $fillable = [
-        'user_id','item_id','title','review','stars','flagged','type'
+    protected $guarded = [
+        'id','created_at','updated_at'
     ];
 }
