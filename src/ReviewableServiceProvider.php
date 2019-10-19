@@ -85,6 +85,8 @@ class ReviewableServiceProvider extends ServiceProvider
             __DIR__ . '/../config/reviewable.php' => 'config/reviewable.php',
             __DIR__.'/../database/migrations/2018_10_12_000000_create_monitors_table.php' =>
                 'database/migrations/2018_10_12_000000_create_monitors_table.php',
+            __DIR__.'/../database/migrations/2018_10_12_000000_create_occurrences_table.php' =>
+                'database/migrations/2018_10_12_000000_create_occurrences_table.php',
             __DIR__.'/../database/migrations/2018_10_12_000000_create_reviews_table.php' =>
                 'database/migrations/2018_10_12_000000_create_reviews_table.php',
         ], 'reviewable');

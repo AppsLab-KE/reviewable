@@ -4,15 +4,15 @@
 namespace Reviewable;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Event;
+use Reviewable\Events\MonitorReview;
+use Reviewable\Listeners\ReviewCreated;
 
 class EventServiceProvider extends ServiceProvider
 {
-    protected $listener = [
-        'Reviewable\Events\MonitorReview' => [
-            'Reviewable\Listeners\ReviewCreated'
-        ],
-        'item.saved' => [
-            'Reviewable\Events\MonitorReview@itemSaved'
+    protected $listen = [
+        MonitorReview::class => [
+            ReviewCreated::class
         ]
     ];
 
@@ -24,7 +24,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        //
     }
 }

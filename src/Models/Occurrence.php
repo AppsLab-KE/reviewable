@@ -4,26 +4,28 @@
 namespace Reviewable\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Reviewable\Traits\ReviewHasRelation;
 
-class Review extends Model
+class Occurrence extends Model
 {
-    use ReviewHasRelation, SoftDeletes;
+    use SoftDeletes;
 
     protected $dates = [
         'deleted_at'
     ];
-
     protected $table;
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->setTable(config('reviewable.tables.review'));
+        $this->setTable('occurrences');
     }
 
-    protected $guarded = [
-        'id','created_at','updated_at'
-    ];
+    public function occurrable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    protected $guarded = [];
 }

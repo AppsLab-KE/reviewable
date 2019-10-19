@@ -13,7 +13,6 @@ class CreateReviewsTable extends Migration
             $table->morphs('reviewer');
             $table->morphs('reviewable');//class name
             $table->boolean('flagged')->default(false);
-            $table->enum('type',['abuse','negative','mention'])->nullable();
             $table->string('title')->nullable();
             $table->text('review')->nullable();
             $table->double('rating')->default(1);

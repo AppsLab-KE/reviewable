@@ -124,7 +124,7 @@ class ReviewableController extends Controller
 
         $result = $review->fill(array_merge([
             'title' => 'demo',
-            'review' => 'demo review',
+            'review' => 'demo fuck review demo guy this it demro marvin',
             'approved' => 1,
             'hotel_id' => 1,
             'rating' => 7,
@@ -135,14 +135,14 @@ class ReviewableController extends Controller
 
         $hotel->reviews()->save($result);
 
-        dd('de');
+        dd('dex');
 
 
         dd($user->reviews()->save(app(config('reviewable.models.review'))->create()));
 
         dd(app(config('reviewable.models.review'))->create([
             'title' => 'demo',
-            'review' => 'demo review',
+            'review' => 'demo review demo guy this it demoro',
             'approved' => 1,
             'hotel_id' => 1,
             'rating' => 7,

@@ -4,8 +4,8 @@
 namespace Reviewable\Traits;
 
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Event;
 use Reviewable\Events\MonitorReview;
+use Reviewable\Models\Occurrence;
 
 trait ReviewHasRelation
 {
@@ -18,6 +18,11 @@ trait ReviewHasRelation
     public function reviewer() : MorphTo
     {
         return $this->morphTo('reviewer');
+    }
+
+    public function occurrences()
+    {
+        return $this->morphMany(Occurrence::class, 'occurrable');
     }
 
     public static function boot()
