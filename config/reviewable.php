@@ -12,7 +12,7 @@ return [
    */
 
     'models' => [
-        'review' => '\Reviewable\Models\Review',
+        'review' => \Reviewable\Models\Review::class,
         'monitor'   => '\Reviewable\Models\Monitor',
     ],
 
@@ -28,7 +28,7 @@ return [
         'review' => "reviews",
     ],
     'monitor' => true,
-    'perPage' => 15,
+    'perPage' => 5,
     'route-prefix' => 'reviews',
     'route-middleware' => 'web',
 ];

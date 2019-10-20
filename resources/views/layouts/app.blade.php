@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <link rel="stylesheet" href="{{ asset('js/app.js') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/reviewable/css/app.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
@@ -20,7 +20,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/reviewable/js/app.js') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
@@ -35,18 +35,15 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-
-                </ul>
-
+                <ul class="navbar-nav mr-auto"></ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="navbar-nav ml-auto">
-                    <!-- Authentication Links -->
-                    @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                    @endguest
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('monitors.monitors') }}">{{ __('Monitors') }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('occurrences.index') }}">{{ __('Occurrences') }}</a>
+                    </li>
                 </ul>
             </div>
         </div>

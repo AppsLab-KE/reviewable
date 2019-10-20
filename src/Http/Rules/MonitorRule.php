@@ -28,14 +28,10 @@ class MonitorRule implements Rule
     public function passes($attribute, $value)
     {
         if (request()->method() == 'POST'){
-            return ! (bool) $this->model->where('name', '=', str_slug($value))->first();
+            return ! (bool) $this->model->where('name', '=', $value)->first();
         }
 
-        if (request()->method() == 'PUT'){
-            return ! (bool) $this->model->where('name', '=', str_slug($value))->first();
-        }
-
-        return false;
+        return true;
     }
 
     /**

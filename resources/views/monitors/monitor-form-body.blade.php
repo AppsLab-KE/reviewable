@@ -1,24 +1,24 @@
-@extends('layouts.app')
+@extends('reviewable::layouts.app')
 @section('content')
     <div class="container">
         <div class="col-12 justify-content-center">
-            @if(isset($role))
-                <form action="{{ route('roles.update', $role->id) }}" method="post">
+            @if(isset($monitor))
+                <form action="{{ route('monitors.update', $monitor->id) }}" method="post">
                     @else
-                        <form action="{{ route('roles.store') }}" method="post">
+                        <form action="{{ route('monitors.store') }}" method="post">
                             @endif
                             <div class="card">
-                                <div class="card-header"><a href="{{ route('roles.index') }}" class="btn btn-primary btn-sm">Back</a> {{ isset($role) ? 'Edit' : 'Add' }} Role</div>
+                                <div class="card-header"><a href="{{ route('monitors.monitors') }}" class="btn btn-primary btn-sm">Back </a> {{ isset($monitor) ? 'Edit' : 'Add' }} Monitor</div>
                                 @csrf
-                                @if(isset($role))
+                                @if(isset($monitor))
                                     @method('put')
                                 @endif
                                 <div class="card-body">
-                                    @include('ruhusa::acl.partials._role-form')
+                                    @include('reviewable::partials._monitor-form')
                                 </div>
                                 <div class="card-footer">
                                     <div class="col-md-12">
-                                        <button class="btn btn-success float-right">{{ isset($role) ? 'Update' : 'Submit' }}</button>
+                                        <button class="btn btn-success float-right">{{ isset($monitor) ? 'Update' : 'Submit' }}</button>
                                     </div>
                                 </div>
                             </div>

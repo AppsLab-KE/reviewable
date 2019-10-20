@@ -27,12 +27,18 @@ class ReviewableServiceProvider extends ServiceProvider
             __DIR__.'/../resources/public/css/app.css' => public_path('vendor/reviewable/css/app.css'),
             __DIR__.'/../resources/public/js/app.js' => public_path('vendor/reviewable/js/app.js'),
             __DIR__.'/../resources/views/layouts/app.blade.php' => resource_path('views/vendor/reviewable/layouts/app.blade.php'),
-            __DIR__.'/../resources/views/reviewable/permission.blade.php' => resource_path('views/vendor/reviewable/reviewable/permission.blade.php'),
-            __DIR__.'/../resources/views/reviewable/role.blade.php' => resource_path('views/vendor/reviewable/reviews/review.blade.php'),
-            __DIR__.'/../resources/views/reviewable/role-form-body.blade.php' => resource_path('views/vendor/reviewable/reviewable/role-form-body.blade.php'),
-            __DIR__.'/../resources/views/reviewable/permission-form-body.blade.php' => resource_path('views/vendor/reviewable/reviewable/permission-form-body.blade.php'),
-            __DIR__.'/../resources/views/reviewable/partials/_role-form.blade.php' => resource_path('views/vendor/reviewable/reviewable/partials/_role-form.blade.php'),
-            __DIR__.'/../resources/views/reviewable/partials/_permission-form.blade.php' => resource_path('views/vendor/reviewable/reviewable/partials/_permission-form.blade.php'),
+            __DIR__.'/../resources/views/monitors/monitor.blade.php' =>
+                resource_path('views/vendor/reviewable/monitors/monitor.blade.php'),
+            __DIR__.'/../resources/views/monitors/monitor-form-body.blade.php' =>
+                resource_path('views/vendor/reviewable/monitors/monitor-form-body.blade.php'),
+            __DIR__.'/../resources/views/occurrences/index.blade.php' =>
+                resource_path('views/vendor/reviewable/occurrences/index.blade.php'),
+            __DIR__.'/../resources/views/partials/_monitor-form.blade.php' =>
+                resource_path('views/vendor/reviewable/partials/_monitor-form.blade.php'),
+            __DIR__.'/../resources/views/reviews/review.blade.php' =>
+                resource_path('views/vendor/reviewable/reviews/review.blade.php'),
+            __DIR__.'/../resources/views/reviews/show.blade.php' =>
+                resource_path('views/vendor/reviewable/reviews/show.blade.php'),
         ],'reviewable-views');
     }
 

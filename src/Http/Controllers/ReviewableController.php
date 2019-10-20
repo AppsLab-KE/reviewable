@@ -5,107 +5,42 @@ namespace Reviewable\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Reviewable\Http\Rules\MonitorRule;
-use Reviewable\Models\Review;
+use Reviewable\Models\Monitor;
+use Reviewable\Models\Occurrence;
 
 class ReviewableController extends Controller
 {
-    public function createReview()
-    {
-        return view('reviewable::reviewable.role-form-body')
-            ->withPermissions(app(config('ruhusa.models.permission'))->all())
-            ->withUsers(app(config('ruhusa.models.defaultUser'))->all());
-    }
-
-
     public function createMonitor()
     {
-        return view('reviewable::acl.permission-form-body');
+        return view('reviewable::monitors.monitor-form-body');
     }
 
-
-    public function editMonitor($permission)
+    public function editMonitor($monitor)
     {
-        return view('ruhusa::acl.permission-form-body')
-            ->withRoles(app(config('ruhusa.models.role'))->all())
-            ->withPermissions(app(config('ruhusa.models.permission'))->all())
-            ->withPermission(app(config('ruhusa.models.permission'))->find($permission));
+        return view('reviewable::monitors.monitor-form-body')
+            ->withMonitor(Monitor::find($monitor));
     }
-
-
-    public function storeReview()
-    {
-        request()->request->add(['slug' => str_slug(request()->name)]);
-        $this->roleValidation(request());
-        $role = app(config('ruhusa.models.role'));
-
-        $role = $role->create(request()->all());
-
-        $role->permissions()->syncWithoutDetaching(request()->permissions);
-
-        if (request()->has('users')){
-            $role->users()->syncWithoutDetaching(request()->users);
-        }
-
-        return redirect()->route('roles.index');
-    }
-
 
     public function storeMonitor()
     {
-        request()->request->add(['slug' => str_slug(request()->name)]);
-        $this->permissionValidation(request());
-        $permission = app(config('ruhusa.models.permission'));
-        $permission = $permission->create(request()->all());
+        $this->monitorValidation(request());
+        Monitor::create(request()->all());
 
-        if (request()->has('roles')){
-            $permission->roles()->syncWithoutDetaching(request()->roles);
-        }
-
-        return redirect()->route('permissions.index');
+        return redirect()->route('monitors.monitors');
     }
 
-    public function updateMonitor($permission)
+    public function updateMonitor($monitor)
     {
-        request()->request->add(['slug' => str_slug(request()->name)]);
-        $permission = app(config('ruhusa.models.permission'))->find($permission);
+        $monitor = Monitor::find($monitor);
+        $this->monitorValidation(request());
+        $monitor->update(request()->all());
 
-        if ($permission->slug != request()->slug){
-            $this->permissionValidation(request());
-        }
-
-        $permission->update(request()->all());
-
-        $permission->roles()->detach();
-        if (request()->has('roles')){
-            $permission->roles()->sync(request()->roles);
-        }
-
-        return redirect()->route('permissions.index');
-    }
-
-    public function editReview($role)
-    {
-        $roleModel = app(config('ruhusa.models.role'));
-        $role =  $roleModel->findOrFail($role);
-
-        return view('ruhusa::acl.role-form-body')
-            ->withRole($role)
-            ->withPermissions(app(config('ruhusa.models.permission'))->all())
-            ->withUsers(app(config('ruhusa.models.defaultUser'))->all());
-    }
-
-    public function roleValidation()
-    {
-        request()->validate([
-            'name' => ['required', 'string', new SlugRule(app(config('ruhusa.models.role')))],
-            'permissions' => ['required']
-        ]);
+        return redirect()->route('monitors.monitors');
     }
 
     public function reviews()
     {
         $review = config('reviewable.models.review');
-
         $review = new $review();
         $user = app('App\User')->find(1);
 
@@ -133,91 +68,57 @@ class ReviewableController extends Controller
         ]));
 
         $hotel->reviews()->save($result);
-
-        dd('dex');
-
-
-        dd($user->reviews()->save(app(config('reviewable.models.review'))->create()));
-
-        dd(app(config('reviewable.models.review'))->create([
-            'title' => 'demo',
-            'review' => 'demo review demo guy this it demoro',
-            'approved' => 1,
-            'hotel_id' => 1,
-            'rating' => 7,
-        ]));
-
+        $review = config('reviewable.models.review');
+        $review = new $review();
         return view('reviewable::reviews.review')
-            ->withReviews($reviews->paginate(config('reviewable.perPage')));
+            ->withReviews($review->paginate(config('reviewable.perPage')));
     }
 
-    public function permissions()
+    public function monitors()
     {
-        $permissions = app(config('ruhusa.models.permission'));
-        if (request()->has('role')){
-            $role = app(config('ruhusa.models.role'))->find(request()->role);
-            $permissions = [];
-            if ($role) {
-                $permissions = $role->permissions();
-            }
-        }
-
-        return view('ruhusa::acl.permission')
-            ->withPermissions($permissions->paginate(config('ruhusa.perPage')));
+        return view('reviewable::monitors.monitor')
+            ->withMonitors(Monitor::paginate(config('reviewable.perPage')));
     }
 
-    public function updateRole($role)
-    {
-        request()->request->add(['slug' => str_slug(request()->name)]);
-        $role = app(config('ruhusa.models.role'))->find($role);
-
-        request()->validate([
-            'permissions' => ['required']
-        ]);
-
-        if ($role->slug != request()->slug){
-            $this->roleValidation(request());
-        }
-
-        $role->update(request()->all());
-
-        $role->permissions()->detach();
-        $role->permissions()->sync(request()->permissions);
-
-        if (request()->has('users')){
-            $role->users()->sync(request()->users);
-        }
-
-        return redirect()->route('roles.index');
-    }
-
-
-    protected function permissionValidation()
+    protected function monitorValidation()
     {
         request()->validate([
-            'name' => ['required', 'string', new MonitorRule(app(config('ruhusa.models.permission')))],
+            'name' => ['required', 'string', new MonitorRule(new Monitor())],
+            'type' => ['required']
         ]);
     }
 
-
-    public function deleteRole($role)
+    public function deleteReview($review)
     {
-        $role = app(config('ruhusa.models.role'))->find($role);
-        $role->users()->detach();
-        $role->permissions()->detach();
-        $role->delete();
+        $review = app(config('reviewable.models.review'))->find($review);
+        $review->occurrences()->delete();
+        $review->delete();
 
+        return redirect()->route('reviews.index');
+    }
+
+    public function deleteMonitor($monitor)
+    {
+        $monitor = Monitor::find($monitor);
+        $monitor->delete();
         return back();
     }
 
-
-    public function deletePermission($permission)
+    public function showReview($review)
     {
-        $permission = app(config('ruhusa.models.permission'))->find($permission);
-        $permission->roles()->detach();
-        $permission->users()->detach();
-        $permission->delete();
+        $review = app(config('reviewable.models.review'))->find($review);
+        return view('reviewable::reviews.show')
+            ->withReview($review);
+    }
 
-        return back();
+    public function occurrences()
+    {
+        $occurrence = new Occurrence();
+        $occurrences = request()->has('monitor') ?
+            $occurrence->newQuery()->where('type', request()->monitor)->paginate(config('reviewable.perPage')) :
+            $occurrence->paginate(config('reviewable.perPage'));
+
+        return view('reviewable::occurrences.index')
+            ->withOccurrences($occurrences);
     }
 }
