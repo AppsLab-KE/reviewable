@@ -107,7 +107,6 @@ class ReviewableController extends Controller
         $review = config('reviewable.models.review');
 
         $review = new $review();
-//        dd(get_class($review));
         $user = app('App\User')->find(1);
 
         $hotel = app('App\Models\Hotel')->create([

@@ -11,6 +11,7 @@ class CreateOccurrencesTable extends Migration
         Schema::create('occurrences', function (Blueprint $table){
             $table->bigIncrements('id')->index();
             $table->morphs('occurrable');
+            $table->string('status')->default('pending');
             $table->integer('count')->nullable();
             $table->enum('type',['abuse','negative','mention'])->nullable();
             $table->softDeletes();

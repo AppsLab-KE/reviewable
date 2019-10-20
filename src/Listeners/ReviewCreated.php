@@ -45,7 +45,6 @@ class ReviewCreated
                     ])));
                 }
             }
-            dd($event->review->review,'d');
         }
     }
 }
