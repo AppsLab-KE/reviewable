@@ -3,7 +3,6 @@
 
 namespace Reviewable\Traits;
 
-
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait Reviewable
