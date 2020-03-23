@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 /*
- * This file is part of the php-code-coverage package.
+ * This file is part of phpunit/php-code-coverage.
  *
  * (c) Sebastian Bergmann <sebastian@phpunit.de>
  *
@@ -892,20 +892,16 @@ final class CodeCoverage
     {
         $runtime = new Runtime;
 
-        if (!$runtime->canCollectCodeCoverage()) {
-            throw new RuntimeException('No code coverage driver available');
-        }
-
-        if ($runtime->isPHPDBG()) {
+        if ($runtime->hasPHPDBGCodeCoverage()) {
             return new PHPDBG;
-        }
-
-        if ($runtime->hasXdebug()) {
-            return new Xdebug($filter);
         }
 
         if ($runtime->hasPCOV()) {
             return new PCOV;
+        }
+
+        if ($runtime->hasXdebug()) {
+            return new Xdebug($filter);
         }
 
         throw new RuntimeException('No code coverage driver available');

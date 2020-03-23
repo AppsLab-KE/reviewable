@@ -1,11 +1,10 @@
 --TEST--
-phpunit --configuration _files/hooks.xml HookTest _files/HookTest.php
+phpunit --configuration _files/hooks.xml _files/HookTest.php
 --FILE--
 <?php declare(strict_types=1);
 $arguments = [
     '--configuration',
     \realpath(__DIR__ . '/_files/hooks.xml'),
-    'HookTest',
     \realpath(__DIR__ . '/_files/HookTest.php'),
 ];
 \array_splice($_SERVER['argv'], 1, count($arguments), $arguments);
@@ -13,8 +12,6 @@ $arguments = [
 require __DIR__ . '/../../bootstrap.php';
 PHPUnit\TextUI\Command::main();
 --EXPECTF--
-PHPUnit %s by Sebastian Bergmann and contributors.
-
 PHPUnit\Test\Extension::tellAmountOfInjectedArguments: %d
 PHPUnit\Test\Extension::executeBeforeFirstTest
 PHPUnit\Test\Extension::executeBeforeTest: PHPUnit\Test\HookTest::testSuccess

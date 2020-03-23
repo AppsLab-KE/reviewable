@@ -35,7 +35,7 @@ if (
     !includeIfExists(__DIR__ . '/../../vendor/autoload.php') &&
     !includeIfExists(__DIR__ . '/../../../../../../vendor/autoload.php')
 ) {
-    fwrite(STDERR, 'InstallPackage dependencies using Composer.'.PHP_EOL);
+    fwrite(STDERR, 'Install dependencies using Composer.'.PHP_EOL);
     exit(1);
 }
 

@@ -18,16 +18,15 @@ use PHPUnit\Framework\TestFailure;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\Warning;
-use PHPUnit\TextUI\ResultPrinter;
+use PHPUnit\TextUI\DefaultResultPrinter;
 use PHPUnit\Util\Exception;
 use PHPUnit\Util\Filter;
-use ReflectionClass;
 use SebastianBergmann\Comparator\ComparisonFailure;
 
 /**
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-final class TeamCity extends ResultPrinter
+final class TeamCity extends DefaultResultPrinter
 {
     /**
      * @var bool
@@ -156,7 +155,7 @@ final class TeamCity extends ResultPrinter
         }
     }
 
-    public function printIgnoredTest($testName, \Throwable $t, float $time): void
+    public function printIgnoredTest(string $testName, \Throwable $t, float $time): void
     {
         $this->printEvent(
             'testIgnored',
@@ -357,7 +356,8 @@ final class TeamCity extends ResultPrinter
     private static function getFileName($className): string
     {
         try {
-            return (new ReflectionClass($className))->getFileName();
+            return (new \ReflectionClass($className))->getFileName();
+            // @codeCoverageIgnoreStart
         } catch (\ReflectionException $e) {
             throw new Exception(
                 $e->getMessage(),
@@ -365,6 +365,7 @@ final class TeamCity extends ResultPrinter
                 $e
             );
         }
+        // @codeCoverageIgnoreEnd
     }
 
     /**

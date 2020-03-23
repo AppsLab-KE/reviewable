@@ -9,9 +9,9 @@
  */
 namespace PHPUnit\Runner;
 
+use PHPUnit\Framework\ClassNotFoundException;
+use PHPUnit\Framework\TestCase;
 use PHPUnit\Util\FileLoader;
-use PHPUnit\Util\Filesystem;
-use ReflectionClass;
 
 /**
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
@@ -19,66 +19,80 @@ use ReflectionClass;
 final class StandardTestSuiteLoader implements TestSuiteLoader
 {
     /**
-     * @throws Exception
-     * @throws \PHPUnit\Framework\Exception
+     * @throws \PHPUnit\Framework\ClassNotFoundException
      */
-    public function load(string $suiteClassName, string $suiteClassFile = ''): ReflectionClass
+    public function load(string $suiteClassFile): \ReflectionClass
     {
-        $suiteClassName = \str_replace('.php', '', \basename($suiteClassName));
+        $suiteClassName = \str_replace('.php', '', \basename($suiteClassFile));
 
-        if (empty($suiteClassFile)) {
-            $suiteClassFile = Filesystem::classNameToFilename(
-                $suiteClassName
+        if (!\class_exists($suiteClassName, false)) {
+            $loadedClasses = \get_declared_classes();
+
+            FileLoader::checkAndLoad($suiteClassFile);
+
+            $loadedClasses = \array_values(
+                \array_diff(\get_declared_classes(), $loadedClasses)
             );
         }
 
-        $loadedClasses = \get_declared_classes();
-        $filename      = FileLoader::checkAndLoad($suiteClassFile);
-        $loadedClasses = \array_values(
-            \array_diff(\get_declared_classes(), $loadedClasses)
-        );
+        if (empty($loadedClasses)) {
+            throw ClassNotFoundException::byFilename($suiteClassName, $suiteClassFile);
+        }
 
-        $offset = 0 - \strlen($suiteClassName);
-        $class  = null;
+        if (!\class_exists($suiteClassName, false)) {
+            $offset = 0 - \strlen($suiteClassName);
 
-        foreach ($loadedClasses as $loadedClass) {
+            foreach ($loadedClasses as $loadedClass) {
+                if (\substr($loadedClass, $offset) === $suiteClassName) {
+                    $suiteClassName = $loadedClass;
+
+                    break;
+                }
+            }
+        }
+
+        if (!\class_exists($suiteClassName, false)) {
+            throw ClassNotFoundException::byFilename($suiteClassName, $suiteClassFile);
+        }
+
+        try {
+            $class = new \ReflectionClass($suiteClassName);
+            // @codeCoverageIgnoreStart
+        } catch (\ReflectionException $e) {
+            throw new \Exception(
+                $e->getMessage(),
+                (int) $e->getCode(),
+                $e
+            );
+        }
+        // @codeCoverageIgnoreEnd
+
+        if ($class->isSubclassOf(TestCase::class) && !$class->isAbstract()) {
+            return $class;
+        }
+
+        if ($class->hasMethod('suite')) {
             try {
-                $class = new ReflectionClass($loadedClass);
+                $method = $class->getMethod('suite');
+                // @codeCoverageIgnoreStart
             } catch (\ReflectionException $e) {
-                throw new Exception(
+                throw new \Exception(
                     $e->getMessage(),
                     (int) $e->getCode(),
                     $e
                 );
             }
+            // @codeCoverageIgnoreEnd
 
-            if ($class->isAbstract()) {
-                continue;
-            }
-
-            if (\substr($loadedClass, $offset) === $suiteClassName &&
-                $class->getFileName() == $filename) {
-                $suiteClassName = $loadedClass;
-
-                break;
+            if (!$method->isAbstract() && $method->isPublic() && $method->isStatic()) {
+                return $class;
             }
         }
 
-        if (!\class_exists($suiteClassName, false) ||
-            !($class instanceof ReflectionClass)) {
-            throw new Exception(
-                \sprintf(
-                    "Class '%s' could not be found in '%s'.",
-                    $suiteClassName,
-                    $suiteClassFile
-                )
-            );
-        }
-
-        return $class;
+        throw ClassNotFoundException::byFilename($suiteClassName, $suiteClassFile);
     }
 
-    public function reload(ReflectionClass $aClass): ReflectionClass
+    public function reload(\ReflectionClass $aClass): \ReflectionClass
     {
         return $aClass;
     }
