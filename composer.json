@@ -1,31 +1,28 @@
 {
     "name": "appslabke/reviewable",
-    "description": "This is package help you add reviews to any model and also monitor reviews content and flag them",
+    "description": "This is package help you add reviews to any model and/or make any model a reviewer",
     "type": "library",
     "license": "MIT",
     "keywords": [
         "appslab",
         "reviews",
-        "reviewable",
         "laravel reviews"
     ],
     "support": {
         "issues": "https://github.com/AppsLab-KE/reviewable/issues"
     },
-    "homepage": "https://github.com/AppsLab-KE/reviewable",
+    "homepage": "https://appslab.co.ke",
     "authors": [
         {
             "name": "Marvin Collins",
             "email": "marvin@appslab.co.ke",
-            "role": "CEO",
+            "role": "Senior Software Engineer",
             "homepage": "https://appslab.co.ke"
         }
     ],
     "minimum-stability": "beta",
     "require": {
-        "php": "^7.3",
-        "doctrine/dbal": "^2.8",
-        "hirak/prestissimo": "^0.3.9"
+        "php": "^7.0",
     },
     "require-dev": {
         "orchestra/testbench": "^4.1",
